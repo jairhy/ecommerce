@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo // Night Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/config.js"></script>
+    <script src="../js/mock-produtos.js"></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/cart.js" defer></script>
+    <script src="../js/produtos-ui.js" defer></script>
+    <script src="../js/produtos.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="../index.html" class="brand glitch" data-text="NIGHT/MARKET">NIGHT<span class="brand-slash">/</span>MARKET</a>
+            <nav class="main-nav">
+                <a href="../index.html">Home</a>
+                <a href="./produtos.html" class="active">Produtos</a>
+                <a href="./carrinho.html">Carrinho <span class="cart-count" data-cart-count>0</span></a>
+                <a href="./login.html" class="nav-guest-only">Login</a>
+                <a href="./perfil.html" class="nav-user-only">Perfil</a>
+                <a href="./pedidos.html" class="nav-user-only">Meus Pedidos</a>
+                <a href="./admin.html" class="nav-admin-only">Painel Admin</a>
+                <button class="link-like nav-user-only" data-logout>Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container block">
+        <div class="block-head">
+            <div>
+                <p class="eyebrow">:: CATÁLOGO ::</p>
+                <h2>Peças disponíveis</h2>
+            </div>
+        </div>
+
+        <div class="filtros">
+            <input type="text" id="busca-nome" placeholder="Buscar peça por nome...">
+            <select id="filtro-categoria">
+                <option value="">Todas as categorias</option>
+            </select>
+        </div>
+
+        <div class="grid-produtos" id="lista-produtos">
+            <p class="muted mono">Carregando sinal do servidor...</p>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <div class="container">NIGHT MARKET // PEÇAS DE PC — <span>SISTEMA DE E-COMMERCE v1.0</span></div>
+    </footer>
+
+</body>
+</html>

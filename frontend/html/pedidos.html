@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos // Night Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/cart.js" defer></script>
+    <script src="../js/produtos-ui.js" defer></script>
+    <script src="../js/pedidos.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="../index.html" class="brand glitch" data-text="NIGHT/MARKET">NIGHT<span class="brand-slash">/</span>MARKET</a>
+            <nav class="main-nav">
+                <a href="../index.html">Home</a>
+                <a href="./produtos.html">Produtos</a>
+                <a href="./carrinho.html">Carrinho <span class="cart-count" data-cart-count>0</span></a>
+                <a href="./login.html" class="nav-guest-only">Login</a>
+                <a href="./perfil.html" class="nav-user-only">Perfil</a>
+                <a href="./pedidos.html" class="active nav-user-only">Meus Pedidos</a>
+                <a href="./admin.html" class="nav-admin-only">Painel Admin</a>
+                <button class="link-like nav-user-only" data-logout>Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container block">
+        <p class="eyebrow mb-8">:: HISTÓRICO ::</p>
+        <h2 class="mb-24">Meus Pedidos</h2>
+
+        <div id="lista-pedidos">
+            <p class="muted mono">Carregando...</p>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <div class="container">NIGHT MARKET // PEÇAS DE PC — <span>SISTEMA DE E-COMMERCE v1.0</span></div>
+    </footer>
+
+</body>
+</html>

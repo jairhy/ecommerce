@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin // Night Market</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/cart.js" defer></script>
+    <script src="../js/admin.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="../index.html" class="brand glitch" data-text="NIGHT/MARKET">NIGHT<span class="brand-slash">/</span>MARKET</a>
+            <nav class="main-nav">
+                <a href="../index.html">Home</a>
+                <a href="./produtos.html">Produtos</a>
+                <a href="./carrinho.html">Carrinho <span class="cart-count" data-cart-count>0</span></a>
+                <a href="./login.html" class="nav-guest-only">Login</a>
+                <a href="./perfil.html" class="nav-user-only">Perfil</a>
+                <a href="./pedidos.html" class="nav-user-only">Meus Pedidos</a>
+                <a href="./admin.html" class="active nav-admin-only">Painel Admin</a>
+                <button class="link-like nav-user-only" data-logout>Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container block">
+        <p class="eyebrow mb-8">:: ACESSO RESTRITO ::</p>
+        <h2 class="mb-24">Painel Administrativo</h2>
+
+        <div id="acesso-negado" class="hidden">
+            <p class="vazio">ACESSO NEGADO :: esta área é restrita a administradores.</p>
+        </div>
+
+        <div id="conteudo-admin" class="hidden">
+            <div class="tabs">
+                <button class="tab-btn ativo" data-tab="produtos">Produtos</button>
+                <button class="tab-btn" data-tab="categorias">Categorias</button>
+                <button class="tab-btn" data-tab="estoque">Estoque</button>
+                <button class="tab-btn" data-tab="entregas">Entregas</button>
+                <button class="tab-btn" data-tab="relatorios">Relatórios</button>
+            </div>
+
+            <!-- PRODUTOS -->
+            <div class="tab-painel ativo" id="tab-produtos">
+                <div class="painel mb-24">
+                    <h3 class="mb-16" id="titulo-form-produto">Cadastrar Peça</h3>
+                    <div id="alerta-produto"></div>
+                    <form id="form-produto">
+                        <input type="hidden" id="produto-id">
+                        <div class="linha-2">
+                            <div class="campo">
+                                <label for="produto-nome">Nome</label>
+                                <input type="text" id="produto-nome" required>
+                            </div>
+                            <div class="campo">
+                                <label for="produto-categoria">Categoria</label>
+                                <select id="produto-categoria" required></select>
+                            </div>
+                        </div>
+                        <div class="linha-2">
+                            <div class="campo">
+                                <label for="produto-marca">Marca</label>
+                                <input type="text" id="produto-marca">
+                            </div>
+                            <div class="campo">
+                                <label for="produto-preco">Preço (R$)</label>
+                                <input type="number" step="0.01" min="0" id="produto-preco" required>
+                            </div>
+                        </div>
+                        <div class="linha-2">
+                            <div class="campo">
+                                <label for="produto-imagem">URL da imagem</label>
+                                <input type="text" id="produto-imagem" placeholder="https://...">
+                            </div>
+                            <div class="campo" id="campo-qtd-inicial">
+                                <label for="produto-qtd-inicial">Quantidade inicial em estoque</label>
+                                <input type="number" min="0" id="produto-qtd-inicial" value="0">
+                            </div>
+                        </div>
+                        <div class="campo">
+                            <label for="produto-descricao">Descrição</label>
+                            <textarea id="produto-descricao" rows="2"></textarea>
+                        </div>
+                        <div class="flex gap-8">
+                            <button type="submit" class="btn btn-primary" id="btn-salvar-produto">Cadastrar</button>
+                            <button type="button" class="btn btn-outline hidden" id="btn-cancelar-produto">Cancelar edição</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tabela-wrap">
+                    <table class="tabela-nm">
+                        <thead><tr><th>Cód.</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Ações</th></tr></thead>
+                        <tbody id="tabela-produtos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CATEGORIAS -->
+            <div class="tab-painel" id="tab-categorias">
+                <div class="painel mb-24">
+                    <h3 class="mb-16" id="titulo-form-categoria">Cadastrar Categoria</h3>
+                    <div id="alerta-categoria"></div>
+                    <form id="form-categoria">
+                        <input type="hidden" id="categoria-id">
+                        <div class="linha-2">
+                            <div class="campo">
+                                <label for="categoria-nome">Nome</label>
+                                <input type="text" id="categoria-nome" required>
+                            </div>
+                            <div class="campo">
+                                <label for="categoria-descricao">Descrição</label>
+                                <input type="text" id="categoria-descricao">
+                            </div>
+                        </div>
+                        <div class="flex gap-8">
+                            <button type="submit" class="btn btn-primary" id="btn-salvar-categoria">Cadastrar</button>
+                            <button type="button" class="btn btn-outline hidden" id="btn-cancelar-categoria">Cancelar edição</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tabela-wrap">
+                    <table class="tabela-nm">
+                        <thead><tr><th>Cód.</th><th>Nome</th><th>Descrição</th><th>Ações</th></tr></thead>
+                        <tbody id="tabela-categorias"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ESTOQUE -->
+            <div class="tab-painel" id="tab-estoque">
+                <p class="muted mb-16">Ajuste a quantidade disponível de cada peça e o estoque mínimo de alerta.</p>
+                <div id="alerta-estoque"></div>
+                <div class="tabela-wrap">
+                    <table class="tabela-nm">
+                        <thead><tr><th>Produto</th><th>Quantidade</th><th>Qtd. Mínima</th><th>Ações</th></tr></thead>
+                        <tbody id="tabela-estoque"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ENTREGAS -->
+            <div class="tab-painel" id="tab-entregas">
+                <p class="muted mb-16">Atualize o status de rastreio das entregas em andamento.</p>
+                <div id="alerta-entrega"></div>
+                <div class="tabela-wrap">
+                    <table class="tabela-nm">
+                        <thead><tr><th>Pedido</th><th>Status</th><th>Cód. Rastreio</th><th>Ações</th></tr></thead>
+                        <tbody id="tabela-entregas"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RELATÓRIOS -->
+            <div class="tab-painel" id="tab-relatorios">
+                <div class="graficos-grid">
+                    <div class="grafico-box">
+                        <h3>Vendas por Categoria de Peça</h3>
+                        <canvas id="grafico-vendas"></canvas>
+                    </div>
+                    <div class="grafico-box">
+                        <h3>Faturamento Mensal</h3>
+                        <canvas id="grafico-faturamento"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <div class="container">NIGHT MARKET // PEÇAS DE PC — <span>SISTEMA DE E-COMMERCE v1.0</span></div>
+    </footer>
+
+</body>
+</html>

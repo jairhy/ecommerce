@@ -1,0 +1,199 @@
+@baseUrl = http://localhost:3000
+
+### 0. Criar Usuário Admin
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Administrador",
+  "email": "admin@email.com",
+  "senha": "admin123Senha@",
+  "cpf": "11144477735",
+  "cep": "01001000",
+  "numero": "500",
+  "tipo": "ADMIN"
+}
+
+### 1. Login como Admin
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "senha": "admin123Senha@"
+}
+
+### Extrai token do Admin
+@tokenAdmin = {{login.response.body.token}}
+
+
+### 2. Criar Categoria (Protegido)
+# @name criarCategoria
+POST {{baseUrl}}/categorias
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nome": "Processadores",
+  "descricao": "Categoria para processadores"
+}
+
+### Extrai codCategoria da resposta
+@idCategoria = {{criarCategoria.response.body.categoria.codCategoria}}
+
+
+### 3. Consultar Categorias (Rota Pública)
+GET {{baseUrl}}/categorias
+
+
+### 4. Criar Produto (Protegido)
+# @name criarProduto
+POST {{baseUrl}}/produtos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "nome": "Processador Ryzen 9 5700X",
+  "descricao": "16 Cores 17 Threads 3.4GHz",
+  "marca": "AMD",
+  "preco": 1250.90,
+  "imagem": "ryzen9.png",
+  "idCategoria": {{idCategoria}}
+}
+
+### Extrai codProduto da resposta
+@idProduto = {{criarProduto.response.body.produto.codProduto}}
+
+
+### 5. Consultar Produtos (Rota Pública)
+GET {{baseUrl}}/produtos
+
+
+### 6. Consultar Estoque (Protegido)
+# @name consultarEstoque
+GET {{baseUrl}}/estoque
+Authorization: Bearer {{tokenAdmin}}
+
+### Extrai o codEstoque do primeiro item da lista
+@idEstoque = {{consultarEstoque.response.body.[0].codEstoque}}
+
+
+### 7. Atualizar Quantidade no Estoque (Protegido)
+PUT {{baseUrl}}/estoque/{{idEstoque}}
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "quantidade": 18,
+  "quantidadeMinima": 3
+}
+
+
+### 8. Consultar Estoque Atualizado (Protegido)
+GET {{baseUrl}}/estoque
+Authorization: Bearer {{tokenAdmin}}
+
+
+### 9. Criar Usuário Cliente
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "João da Silva",
+  "email": "joao@email.com",
+  "senha": "cliente123Senha@",
+  "cpf": "22255588846",
+  "cep": "01001000",
+  "numero": "123",
+  "tipo": "CLIENTE"
+}
+
+
+### 10. Login do Cliente
+# @name loginCliente
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "joao@email.com",
+  "senha": "cliente123Senha@"
+}
+
+### Extrai token do cliente
+@tokenCliente = {{loginCliente.response.body.token}}
+
+
+### 11. Criar Pedido (Protegido)
+# @name criarPedido
+POST {{baseUrl}}/pedidos
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{
+  "itens": [
+    {
+      "idProduto": {{idProduto}},
+      "quantidade": 2
+    }
+  ]
+}
+
+### Extrai codPedido da resposta
+@idPedido = {{criarPedido.response.body.codPedido}}
+
+
+### 12. Consultar Pedidos do Cliente Logado (Protegido)
+GET {{baseUrl}}/pedidos/meus-pedidos
+Authorization: Bearer {{tokenCliente}}
+
+
+### 13. Consultar Pedido Específico (Protegido)
+GET {{baseUrl}}/pedidos/{{idPedido}}
+Authorization: Bearer {{tokenCliente}}
+
+
+### 14. Atualizar Status do Pedido (ADMIN)
+PUT {{baseUrl}}/pedidos/{{idPedido}}
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "status": "PAGO"
+}
+
+
+### 15. Consultar Estoque Após Pedido (Protegido)
+GET {{baseUrl}}/estoque
+Authorization: Bearer {{tokenAdmin}}
+
+
+### 16. Consultar Entregas Geradas (Protegido)
+# @name consultarEntrega
+GET {{baseUrl}}/entregas
+Authorization: Bearer {{tokenAdmin}}
+
+### Extrai codEntrega da entrega criada no pedido
+@idEntrega = {{consultarEntrega.response.body.[0].codEntrega}}
+
+
+### 17. Atualizar Código de Rastreio e Status da Entrega (ADMIN)
+PUT {{baseUrl}}/entregas/{{idEntrega}}
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "status": "EM_TRANSITO",
+  "codigoRastreio": "BR123456789BR",
+  "dataEnvio": "2026-08-28"
+}
+
+
+### 18. Relatório: Vendas por Categoria (Protegido)
+GET {{baseUrl}}/relatorios/vendas
+Authorization: Bearer {{tokenAdmin}}
+
+
+### 19. Relatório: Faturamento Mensal / Estoque (Protegido)
+GET {{baseUrl}}/relatorios/estoque
+Authorization: Bearer {{tokenAdmin}}

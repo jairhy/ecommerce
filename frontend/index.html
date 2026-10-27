@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Market // Peças Gamer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/config.js"></script>
+    <script src="./js/mock-produtos.js"></script>
+    <script src="./js/auth.js" defer></script>
+    <script src="./js/cart.js" defer></script>
+    <script src="./js/produtos-ui.js" defer></script>
+    <script src="./js/index.js" defer></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="./index.html" class="brand glitch" data-text="NIGHT/MARKET">NIGHT<span class="brand-slash">/</span>MARKET</a>
+            <nav class="main-nav">
+                <a href="./index.html" class="active">Home</a>
+                <a href="./html/produtos.html">Produtos</a>
+                <a href="./html/carrinho.html">Carrinho <span class="cart-count" data-cart-count>0</span></a>
+                <a href="./html/login.html" class="nav-guest-only">Login</a>
+                <a href="./html/perfil.html" class="nav-user-only">Perfil</a>
+                <a href="./html/pedidos.html" class="nav-user-only">Meus Pedidos</a>
+                <a href="./html/admin.html" class="nav-admin-only">Painel Admin</a>
+                <button class="link-like nav-user-only" data-logout>Sair</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div>
+                    <p class="eyebrow">:: BEM-VINDO A NIGHT MARKET ::</p>
+                    <h1>Peças que <span class="glitch" data-text="turbinam">turbinam</span> sua build</h1>
+                    <p class="lead">Estoque dinâmico, entrega rastreada e hardware validado pra quem não tem tempo a perder nas ruas. Escolha sua peça, finalize o pedido, monte sua build.</p>
+                    <div class="hero-actions">
+                        <a href="./html/produtos.html" class="btn btn-primary">Ver Catálogo</a>
+                        <a href="./html/cadastro.html" class="btn btn-outline">Criar Conta</a>
+                    </div>
+                </div>
+                <div class="hero-panel">
+                    <p class="eyebrow mb-16">STATUS DA LOJA</p>
+                    <div class="hero-stat"><span>Peças disponíveis</span><span class="val" id="stat-produtos">--</span></div>
+                    <div class="hero-stat"><span>Categorias ativas</span><span class="val" id="stat-categorias">--</span></div>
+                    <div class="hero-stat"><span>Entrega</span><span class="val">RASTREADA</span></div>
+                    <div class="hero-stat"><span>Pagamento</span><span class="val">SEGURO / JWT</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="block container">
+            <div class="block-head">
+                <h2>Destaques do dia</h2>
+                <a href="./html/produtos.html" class="btn btn-outline btn-sm">Catálogo completo</a>
+            </div>
+            <div class="grid-produtos" id="lista-destaques">
+                <p class="muted mono">Carregando sinal do servidor...</p>
+            </div>
+        </section>
+
+        <section class="block container" style="padding-top:0;">
+            <div class="painel">
+                <div class="hero-grid" style="grid-template-columns: 1fr auto; align-items:center;">
+                    <div>
+                        <p class="eyebrow mb-8">ACESSO RÁPIDO</p>
+                        <h3>Movimentação de Vendas &amp; Cadastro de Produtos</h3>
+                        <p class="muted mt-8">Administradores acessam o painel completo com gestão de estoque, produtos e relatórios de faturamento.</p>
+                    </div>
+                    <a href="./html/admin.html" class="btn btn-primary">Painel Admin</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="container">NIGHT MARKET // PEÇAS DE PC — <span>SISTEMA DE E-COMMERCE v1.0</span></div>
+    </footer>
+
+</body>
+</html>
